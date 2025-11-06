@@ -55,7 +55,7 @@ fn main() {
 fn check_url(url: &String) -> bool {
     match Url::parse(url) {
         Ok(parsed_url) => {
-            if (parsed_url.scheme()=="http" || parsed_url.scheme()=="https"){
+            if parsed_url.scheme()=="http" || parsed_url.scheme()=="https"{
                 return true;
             }
             else{
