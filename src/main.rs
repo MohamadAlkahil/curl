@@ -54,8 +54,14 @@ fn main() {
 
 fn check_url(url: &String) -> bool {
     match Url::parse(url) {
-        Ok(_) => {
-            return true;
+        Ok(parsed_url) => {
+            if (parsed_url.scheme()=="http" || parsed_url.scheme()=="https"){
+                return true;
+            }
+            else{
+                println!("Error: The URL does not have a valid base protocol.");
+                return false;
+            }
         }
         Err(ParseError::RelativeUrlWithoutBase) => {
             println!("Error: The URL does not have a valid base protocol.");
@@ -116,7 +122,7 @@ fn print_response(res: Response) {
             Err(e) => println!("Error: {}", e),
         }
     } else {
-        println!("Error: Request failed with status code: {}.", res.status());
+        println!("Error: Request failed with status code: {}.", res.status().as_u16());
     }
 }
 
