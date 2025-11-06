@@ -113,10 +113,10 @@ fn print_response(res: Response) {
                 match json_body {
                     Ok(json) => println!(
                         "Response body (JSON with sorted keys):\n{}",
-                        serde_json::to_string_pretty(&json).unwrap()
+                        serde_json::to_string_pretty(&json).unwrap().trim()
                     ),
                     // its just a normal response with no JSON
-                    Err(_) => println!("Response body:\n{}", body),
+                    Err(_) => println!("Response body:\n{}", body.trim()),
                 }
             }
             Err(e) => println!("Error: {}", e),
