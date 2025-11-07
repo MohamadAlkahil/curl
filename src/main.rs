@@ -4,11 +4,8 @@ use std::collections::HashMap;
 use structopt::StructOpt;
 use url::{ParseError, Url};
 
-// TODO:
-// fix send data in body using form and split to parse into hashmap
-// test again take only input.sh and the rest of inner files and put em in the folder like you did for A2
-// add the tests from inside the documentation
-// add proper comments
+
+//The Opt Struct holds the data assocaited with the Command Line Argument
 #[derive(StructOpt)]
 struct Opt {
     url: String,
@@ -52,6 +49,15 @@ fn main() {
     }
 }
 
+/*
+Breif Explanation: Checks if the url is valid and if not prints the appropriate error
+
+Parameters: 
+    url: &String - the url to be used in the http request
+
+Returns: 
+    bool - returns true if the the url can be parsed otherwise false
+*/
 fn check_url(url: &String) -> bool {
     match Url::parse(url) {
         Ok(parsed_url) => {
@@ -94,6 +100,15 @@ fn check_url(url: &String) -> bool {
     }
 }
 
+/*
+Breif Explanation: tries to send get request otherwise prints error
+
+Parameters: 
+    opt: &Opt - the data from the Command Line Argument
+
+Returns: 
+    NA
+*/
 fn get_request(opt: &Opt) {
     // try to make the get request and print out response
     match reqwest::blocking::get(&opt.url){
@@ -102,6 +117,15 @@ fn get_request(opt: &Opt) {
     }
 }
 
+/*
+Breif Explanation: prints the response for the request
+
+Parameters: 
+    opt: &Opt - the data from the Command Line Argument
+
+Returns: 
+    NA
+*/
 fn print_response(res: Response) {
     // see if the response has a status code in the 200s else print status code error
     if res.status().is_success() {
@@ -126,6 +150,15 @@ fn print_response(res: Response) {
     }
 }
 
+/*
+Breif Explanation: tries to send post request otherwise prints error
+
+Parameters: 
+    opt: &Opt - the data from the Command Line Argument
+
+Returns: 
+    NA
+*/
 fn post_request(opt: &Opt) {
     let client = reqwest::blocking::Client::new();
     // check if the request has --json
